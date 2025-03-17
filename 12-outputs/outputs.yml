@@ -17,16 +17,16 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     outputs:
-      job-build-status: ${{ steps.build.outputs.status }}
+      job-build-status: ${{ steps.build-job.outputs.status }}
     steps:
       - name: Print GITHUB_OUTPUT path
         run: |
           echo "GITHUB_OUTPUT is set to: $GITHUB_OUTPUT"
 
       - name: Build
-        id: build
+        id: build-job
         run: |
-          echo "status=${{ github.event.inputs.build-status }}" >> $GITHUB_OUTPUT
+          echo "status=${{ inputs.build-status }}" >> $GITHUB_OUTPUT
 
   deploy:
     name: Deploy
