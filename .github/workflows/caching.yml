@@ -32,7 +32,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ inputs.node-version }}
+          node-version: '${{ github.event.inputs.node-version }}'
 
       - name: Download cached dependencies
         id: cache
