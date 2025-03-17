@@ -1,0 +1,62 @@
+name: 15 - Working with Matrices
+
+on:
+  workflow_dispatch:
+
+jobs:
+  backwards-compatibility:
+    # The job name uses the matrix values (OS and Node version)
+    name: ${{ matrix.os }}-${{ matrix.node-version }}
+    # Use the OS value from the matrix
+    runs-on: ${{ matrix.os }}
+    strategy:
+      # fail-fast: false
+      matrix:
+        # The base matrix defines three Node versions and two OS values.
+        node-version: [18.x, 20.x, 21.x]
+        os: [ubuntu-latest, windows-latest]
+        # include:
+        #   # Additional combination: Node 16.x on ubuntu-latest
+        #   - os: ubuntu-latest
+        #     node-version: 16.x
+        #   # Additional combination: For ubuntu-latest and Node 21.x, add a "tag" key with the value experimental.
+        #   - os: ubuntu-latest
+        #     node-version: 21.x
+        #     tag: experimental
+
+    steps:
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # - name: Fail if experimental
+      #   # This step runs only when the matrix has a tag equal to experimental.
+      #   if: ${{ matrix.tag == 'experimental' }}
+      #   run: |
+      #     echo "Failing because tag is experimental"
+      #     exit 1
+
+      - name: Perform some tests
+        run: |
+          echo "Running tests on OS ${{ matrix.os }} and NodeJS ${{ matrix.node-version }}"
+          sleep 10
+
+      - name: Upload test results
+        run: echo "Uploading test results"
+  
+  # include-example:
+  #   name: ${{maxtrix.color}}-${{matrix.shape}}-${{matrix.size}}
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       color: [red, green]
+  #       shape: [circle, square]
+  #       size: [small, large]
+  #       include:
+  #         - color: red 
+  #         - shape: triangle
+  #   steps:
+  #     - name: Dummy step
+  #       run: echo "${{maxtrix.color}}-${{matrix.shape}}-${{matrix.size}}"
+      
