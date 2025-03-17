@@ -2,21 +2,21 @@ name: 13 - Using Caching
 
 on:
   workflow_dispatch:
-    # inputs:
-    #   use-cache:
-    #     description: "Whether to execute cache step"
-    #     required: false
-    #     type: boolean
-    #     default: true
-    #   node-version:
-    #     description: "Node version"
-    #     required: false
-    #     type: choice
-    #     options:
-    #       - 18.x
-    #       - 20.x
-    #       - 21.x
-    #     default: 20.x
+    inputs:
+      use-cache:
+        description: "Whether to execute cache step"
+        required: false
+        type: boolean
+        default: true
+      node-version:
+        description: "Node version"
+        required: false
+        type: choice
+        options:
+          - 18.x
+          - 20.x
+          - 21.x
+        default: 20.x
 
 jobs:
   build:
@@ -31,18 +31,16 @@ jobs:
 
       - name: Setup Node
         uses: actions/setup-node@v3
-        # with:
-        #   node-version: '18'
-          # node-version: ${{ inputs.node-version }}
+        with:
+          node-version: ${{ inputs.node-version }}
 
-      # Part 3
-      # - name: Download cached dependencies
-      #   id: cache
-      #   if: ${{ inputs.use-cache == 'true' }}
-      #   uses: actions/cache@v3
-      #   with:
-      #     key: deps-node-modules-${{ hashFiles('13-caching/react-app/package-lock.json') }}
-      #     path: 13-caching/react-app/node_modules
+      - name: Download cached dependencies
+        id: cache
+        if: ${{ inputs.use-cache == 'true' }}
+        uses: actions/cache@v3
+        with:
+          key: deps-node-modules-${{ hashFiles('13-caching/react-app/package-lock.json') }}
+          path: 13-caching/react-app/node_modules
 
       - name: Install dependencies
         # if: ${{ steps.cache.outputs.cache-hit != 'true' }}
