@@ -5,14 +5,12 @@ on:
 
 jobs:
   backwards-compatibility:
-    # The job name uses the matrix values (OS and Node version)
     name: ${{ matrix.os }}-${{ matrix.node-version }}
     # Use the OS value from the matrix
     runs-on: ${{ matrix.os }}
     strategy:
       # fail-fast: false
       matrix:
-        # The base matrix defines three Node versions and two OS values.
         node-version: [18.x, 20.x, 21.x]
         os: [ubuntu-latest, windows-latest]
         # include:
