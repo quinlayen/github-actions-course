@@ -13,14 +13,14 @@ jobs:
       matrix:
         node-version: [18.x, 20.x, 21.x]
         os: [ubuntu-latest, windows-latest]
-        # include:
-        #   # Additional combination: Node 16.x on ubuntu-latest
-        #   - os: ubuntu-latest
-        #     node-version: 16.x
-        #   # Additional combination: For ubuntu-latest and Node 21.x, add a "tag" key with the value experimental.
-        #   - os: ubuntu-latest
-        #     node-version: 21.x
-        #     tag: experimental
+        include:
+         
+          - os: ubuntu-latest
+            node-version: 16.x
+          
+          # - os: ubuntu-latest
+          #   node-version: 21.x
+          #   tag: experimental
 
     steps:
       - name: Setup node
@@ -43,18 +43,18 @@ jobs:
       - name: Upload test results
         run: echo "Uploading test results"
   
-  # include-example:
-  #   name: ${{maxtrix.color}}-${{matrix.shape}}-${{matrix.size}}
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       color: [red, green]
-  #       shape: [circle, square]
-  #       size: [small, large]
-  #       include:
-  #         - color: red 
-  #         - shape: triangle
-  #   steps:
-  #     - name: Dummy step
-  #       run: echo "${{maxtrix.color}}-${{matrix.shape}}-${{matrix.size}}"
+  include-example:
+    name: ${{matrix.color}}-${{matrix.shape}}-${{matrix.size}}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        color: [red, green]
+        shape: [circle, square]
+        size: [small, large]
+        include:
+          - color: red 
+          - shape: triangle
+    steps:
+      - name: Dummy step
+        run: echo "${{matrix.color}}-${{matrix.shape}}-${{matrix.size}}"
       
